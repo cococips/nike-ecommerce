@@ -1,34 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nike_ecommerce/core/routing/app_router.dart';
+import 'firebase_options.dart';
+
+// TODO: Import file Splash Screen nanti
+// import 'features/splash/presentation/pages/splash_page.dart'; 
 
 void main() async {
+  // Wajib dipanggil sebelum inisialisasi binding apapun di Flutter
   WidgetsFlutterBinding.ensureInitialized();
-  // Firebase initialization is wrapped in try-catch in case options are not yet configured.
-  // We use placeholder logic so the app won't crash before flutterfire configure is run.
-  try {
-    await Firebase.initializeApp();
-  } catch (e) {
-    debugPrint('Firebase Initialization Error: $e. Did you run flutterfire configure?');
-  }
 
-  runApp(const ProviderScope(child: NikeEcommerceApp()));
+  // Inisialisasi Firebase berdasarkan platform (Android/iOS/Web)
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // TODO: Inisialisasi Dependency Injection (GetIt) di sini nanti
+  // await di.init();
+
+  runApp(const NikeApp());
 }
 
-class NikeEcommerceApp extends StatelessWidget {
-  const NikeEcommerceApp({super.key});
+class NikeApp extends StatelessWidget {
+  const NikeApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Nike E-commerce',
+    return MaterialApp(
+      title: 'Nike Enterprise Store',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
+        // Tema minimalis hitam-putih khas Nike
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.black,
+          primary: Colors.black,
+          secondary: Colors.grey,
+        ),
+        scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
       ),
-      routerConfig: appRouter,
-      debugShowCheckedModeBanner: false,
+      // Untuk sementara kita arahkan ke halaman kosong berlatar hitam
+      // Nanti akan diganti menjadi SplashPage()
+      home: const Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: CircularProgressIndicator(color: Colors.white),
+        ),
+      ), 
     );
   }
 }
