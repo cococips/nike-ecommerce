@@ -12,7 +12,20 @@
           "package_name": "com.nike.nike_ecommerce"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "80419558247-f7all77jllc316a0d2ugbg6klio8404e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nike.nike_ecommerce",
+            "certificate_hash": "c8e3f7b3fdebc85b43a15f9541629b3929a96169"
+          }
+        },
+        {
+          "client_id": "80419558247-k5ur8falnemjimsh27daknsnulisvhdl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDYsr1mN5vJO_dvIbfHMCbFwPpYCi-KWGI"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "80419558247-k5ur8falnemjimsh27daknsnulisvhdl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "80419558247-00lg4dseja512q5q9l67h3b4ti154fs9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nike.nikeEcommerce"
+              }
+            }
+          ]
         }
       }
     }

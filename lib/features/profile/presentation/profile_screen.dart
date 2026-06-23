@@ -9,8 +9,7 @@ class ProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authState = ref.watch(authControllerProvider);
-    final user = authState.user;
+    final user = ref.watch(currentUserProvider);
 
     return Scaffold(
       backgroundColor: Colors.white,
