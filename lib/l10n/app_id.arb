@@ -1,0 +1,10 @@
+{
+  "@@locale": "id",
+  "appName": "Nike Enterprise",
+  "homeTitle": "NIKE",
+  "homeSubtitle": "JUST DO IT.",
+  "noProducts": "Tidak ada produk tersedia.",
+  "addToCart": "Tambah ke Keranjang",
+  "retry": "Coba Lagi",
+  "failedToLoad": "Gagal memuat produk"
+}

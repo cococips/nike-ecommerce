@@ -1,46 +1,123 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:nike_ecommerce/core/errors/failure.dart';
 import 'package:nike_ecommerce/features/products/domain/models/product.dart';
 import 'package:nike_ecommerce/features/products/domain/repositories/product_repository.dart';
+import '../datasources/product_remote_datasource.dart';
+import '../datasources/product_local_datasource.dart';
+import 'package:nike_ecommerce/core/utils/logger.dart';
 
 class FirebaseProductRepository implements ProductRepository {
-  final FirebaseFirestore _firestore;
+  final ProductRemoteDataSource _remoteDataSource;
+  final ProductLocalDataSource _localDataSource;
 
-  FirebaseProductRepository(this._firestore);
+  FirebaseProductRepository(this._remoteDataSource, this._localDataSource);
 
   @override
   Future<Either<Failure, List<Product>>> getProducts() async {
     try {
-      final snapshot = await _firestore.collection('products').get();
-      final products = snapshot.docs.map((doc) {
-        final data = doc.data();
-        // Fallback for ID if not strictly in document data, use doc.id
-        data['id'] = doc.id;
-        return Product.fromJson(data);
-      }).toList();
-      return Right(products);
-    } on FirebaseException catch (e) {
-      return Left(Failure('Firebase Error: ${e.message}'));
+      // Offline-first strategy
+      final localProducts = await _localDataSource.getCachedProducts();
+      
+      if (localProducts.isNotEmpty) {
+        log.d('Returning ${localProducts.length} products from local cache.');
+        // Optional: Fetch from remote in background to refresh cache
+        _refreshCacheInBackground();
+        return right(localProducts);
+      }
+
+      log.d('Fetching products from remote.');
+      final remoteProducts = await _remoteDataSource.getProducts();
+      await _localDataSource.cacheProducts(remoteProducts);
+      return right(remoteProducts);
     } catch (e) {
-      return Left(Failure('Failed to fetch products: $e'));
+      log.e('Error fetching products', error: e);
+      return left(ServerFailure(e.toString()));
+    }
+  }
+  
+  Future<void> _refreshCacheInBackground() async {
+    try {
+      final remoteProducts = await _remoteDataSource.getProducts();
+      await _localDataSource.cacheProducts(remoteProducts);
+      log.d('Background cache refresh successful.');
+    } catch (e) {
+      log.w('Background cache refresh failed.', error: e);
     }
   }
 
   @override
   Future<Either<Failure, Product>> getProductById(String id) async {
     try {
-      final doc = await _firestore.collection('products').doc(id).get();
-      if (!doc.exists || doc.data() == null) {
-        return Left(Failure('Product not found'));
+      // Check local cache first
+      final localProducts = await _localDataSource.getCachedProducts();
+      try {
+        final product = localProducts.firstWhere((p) => p.id == id);
+        return right(product);
+      } catch (_) {
+        // Not found locally
       }
-      final data = doc.data()!;
-      data['id'] = doc.id;
-      return Right(Product.fromJson(data));
-    } on FirebaseException catch (e) {
-      return Left(Failure('Firebase Error: ${e.message}'));
+
+      final remoteProduct = await _remoteDataSource.getProductById(id);
+      return right(remoteProduct);
     } catch (e) {
-      return Left(Failure('Failed to fetch product: $e'));
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Product>>> getProductsByCategory(String category) async {
+    try {
+      final localProducts = await _localDataSource.getCachedProducts();
+      if (localProducts.isNotEmpty) {
+        final filtered = localProducts.where((p) => p.category == category).toList();
+        if (filtered.isNotEmpty) {
+          return right(filtered);
+        }
+      }
+
+      final remoteProducts = await _remoteDataSource.getProductsByCategory(category);
+      return right(remoteProducts);
+    } catch (e) {
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> addProduct(Product product) async {
+    try {
+      await _remoteDataSource.addProduct(product);
+      // Refresh cache so UI updates
+      _refreshCacheInBackground();
+      return right(null);
+    } catch (e) {
+      log.e('Error adding product', error: e);
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateProduct(Product product) async {
+    try {
+      await _remoteDataSource.updateProduct(product);
+      // Refresh cache so UI updates
+      _refreshCacheInBackground();
+      return right(null);
+    } catch (e) {
+      log.e('Error updating product', error: e);
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteProduct(String id) async {
+    try {
+      await _remoteDataSource.deleteProduct(id);
+      // Refresh cache so UI updates
+      _refreshCacheInBackground();
+      return right(null);
+    } catch (e) {
+      log.e('Error deleting product', error: e);
+      return left(ServerFailure(e.toString()));
     }
   }
 }

@@ -220,8 +220,8 @@ return $default(_that.id,_that.product,_that.selectedSize,_that.quantity);case _
 /// @nodoc
 @JsonSerializable()
 
-class _CartItem implements CartItem {
-  const _CartItem({required this.id, required this.product, required this.selectedSize, required this.quantity});
+class _CartItem extends CartItem {
+  const _CartItem({required this.id, required this.product, required this.selectedSize, required this.quantity}): super._();
   factory _CartItem.fromJson(Map<String, dynamic> json) => _$CartItemFromJson(json);
 
 @override final  String id;

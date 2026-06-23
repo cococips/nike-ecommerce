@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:nike_ecommerce/l10n/app_localizations.dart';
 import 'package:nike_ecommerce/features/products/presentation/providers/product_providers.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -7,39 +9,30 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final productsState = ref.watch(productsNotifierProvider);
+    final productsState = ref.watch(productsProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text(
-          'NIKE',
-          style: TextStyle(
-            fontWeight: FontWeight.w900,
+        title: Text(
+          l10n.homeTitle,
+          style: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
             letterSpacing: 2.0,
+            fontWeight: FontWeight.w900,
           ),
         ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_bag_outlined, color: Colors.black),
-            onPressed: () {
-              // TODO: Navigate to Cart
-            },
-          ),
-        ],
+        // Actions removed as Settings and Bag are now in bottom navigation and profile
       ),
       body: productsState.when(
         data: (products) {
           if (products.isEmpty) {
-            return const Center(
-              child: Text('No products available.'),
+            return Center(
+              child: Text(l10n.noProducts),
             );
           }
           return RefreshIndicator(
-            onRefresh: () => ref.read(productsNotifierProvider.notifier).refresh(),
+            onRefresh: () => ref.read(productsProvider.notifier).refresh(),
             child: GridView.builder(
               padding: const EdgeInsets.all(16.0),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -57,7 +50,7 @@ class HomeScreen extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 10,
                         offset: const Offset(0, 5),
                       ),
@@ -194,20 +187,16 @@ class HomeScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Failed to load products:\n${error.toString()}',
+                  '${l10n.failedToLoad}:\n${error.toString()}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(color: Colors.redAccent),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
-                    ref.read(productsNotifierProvider.notifier).refresh();
+                    ref.read(productsProvider.notifier).refresh();
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    foregroundColor: Colors.white,
-                  ),
-                  child: const Text('Retry'),
+                  child: Text(l10n.retry),
                 ),
               ],
             ),

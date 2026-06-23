@@ -1,51 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:nike_ecommerce/l10n/app_localizations.dart';
 import 'firebase_options.dart';
-
-// TODO: Import file Splash Screen nanti
-// import 'features/splash/presentation/pages/splash_page.dart'; 
+import 'core/routing/app_router.dart';
+import 'core/theme/app_theme.dart';
+import 'core/providers/provider_observer.dart';
 
 void main() async {
-  // Wajib dipanggil sebelum inisialisasi binding apapun di Flutter
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Inisialisasi Firebase berdasarkan platform (Android/iOS/Web)
+  await Hive.initFlutter();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // TODO: Inisialisasi Dependency Injection (GetIt) di sini nanti
-  // await di.init();
 
-  runApp(const NikeApp());
+  runApp(
+    ProviderScope(
+      observers: [AppProviderObserver()],
+      child: const NikeApp(),
+    ),
+  );
 }
 
-class NikeApp extends StatelessWidget {
+class NikeApp extends ConsumerWidget {
   const NikeApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(routerProvider);
+    
+    return MaterialApp.router(
       title: 'Nike Enterprise Store',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        // Tema minimalis hitam-putih khas Nike
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.black,
-          primary: Colors.black,
-          secondary: Colors.grey,
-        ),
-        scaffoldBackgroundColor: Colors.white,
-        useMaterial3: true,
-      ),
-      // Untuk sementara kita arahkan ke halaman kosong berlatar hitam
-      // Nanti akan diganti menjadi SplashPage()
-      home: const Scaffold(
-        backgroundColor: Colors.black,
-        body: Center(
-          child: CircularProgressIndicator(color: Colors.white),
-        ),
-      ), 
+      theme: AppTheme.lightTheme,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('id'),
+      ],
+      routerConfig: router,
     );
   }
 }

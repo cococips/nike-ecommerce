@@ -11,15 +11,16 @@ _Product _$ProductFromJson(Map<String, dynamic> json) => _Product(
   name: json['name'] as String,
   description: json['description'] as String,
   price: (json['price'] as num).toDouble(),
+  imageUrls: (json['imageUrls'] as List<dynamic>)
+      .map((e) => e as String)
+      .toList(),
   category: json['category'] as String,
   sizes: (json['sizes'] as List<dynamic>)
       .map((e) => (e as num).toInt())
       .toList(),
-  imageUrl: json['imageUrl'] as String,
-  rating: (json['rating'] as num).toDouble(),
-  reviewCount: (json['reviewCount'] as num).toInt(),
+  colors: (json['colors'] as List<dynamic>).map((e) => e as String).toList(),
   stock: (json['stock'] as num).toInt(),
-  isFeatured: json['isFeatured'] as bool,
+  createdAt: _dateTimeFromTimestamp(json['createdAt']),
 );
 
 Map<String, dynamic> _$ProductToJson(_Product instance) => <String, dynamic>{
@@ -27,11 +28,10 @@ Map<String, dynamic> _$ProductToJson(_Product instance) => <String, dynamic>{
   'name': instance.name,
   'description': instance.description,
   'price': instance.price,
+  'imageUrls': instance.imageUrls,
   'category': instance.category,
   'sizes': instance.sizes,
-  'imageUrl': instance.imageUrl,
-  'rating': instance.rating,
-  'reviewCount': instance.reviewCount,
+  'colors': instance.colors,
   'stock': instance.stock,
-  'isFeatured': instance.isFeatured,
+  'createdAt': _dateTimeToTimestamp(instance.createdAt),
 };

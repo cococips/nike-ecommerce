@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Product {
 
- String get id; String get name; String get description; double get price; String get category; List<int> get sizes; String get imageUrl; double get rating; int get reviewCount; int get stock; bool get isFeatured;
+ String get id; String get name; String get description; double get price; List<String> get imageUrls; String get category; List<int> get sizes; List<String> get colors; int get stock;@JsonKey(fromJson: _dateTimeFromTimestamp, toJson: _dateTimeToTimestamp) DateTime get createdAt;
 /// Create a copy of Product
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ProductCopyWith<Product> get copyWith => _$ProductCopyWithImpl<Product>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Product&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.category, category) || other.category == category)&&const DeepCollectionEquality().equals(other.sizes, sizes)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.reviewCount, reviewCount) || other.reviewCount == reviewCount)&&(identical(other.stock, stock) || other.stock == stock)&&(identical(other.isFeatured, isFeatured) || other.isFeatured == isFeatured));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Product&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&const DeepCollectionEquality().equals(other.imageUrls, imageUrls)&&(identical(other.category, category) || other.category == category)&&const DeepCollectionEquality().equals(other.sizes, sizes)&&const DeepCollectionEquality().equals(other.colors, colors)&&(identical(other.stock, stock) || other.stock == stock)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,description,price,category,const DeepCollectionEquality().hash(sizes),imageUrl,rating,reviewCount,stock,isFeatured);
+int get hashCode => Object.hash(runtimeType,id,name,description,price,const DeepCollectionEquality().hash(imageUrls),category,const DeepCollectionEquality().hash(sizes),const DeepCollectionEquality().hash(colors),stock,createdAt);
 
 @override
 String toString() {
-  return 'Product(id: $id, name: $name, description: $description, price: $price, category: $category, sizes: $sizes, imageUrl: $imageUrl, rating: $rating, reviewCount: $reviewCount, stock: $stock, isFeatured: $isFeatured)';
+  return 'Product(id: $id, name: $name, description: $description, price: $price, imageUrls: $imageUrls, category: $category, sizes: $sizes, colors: $colors, stock: $stock, createdAt: $createdAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ProductCopyWith<$Res>  {
   factory $ProductCopyWith(Product value, $Res Function(Product) _then) = _$ProductCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String description, double price, String category, List<int> sizes, String imageUrl, double rating, int reviewCount, int stock, bool isFeatured
+ String id, String name, String description, double price, List<String> imageUrls, String category, List<int> sizes, List<String> colors, int stock,@JsonKey(fromJson: _dateTimeFromTimestamp, toJson: _dateTimeToTimestamp) DateTime createdAt
 });
 
 
@@ -65,20 +65,19 @@ class _$ProductCopyWithImpl<$Res>
 
 /// Create a copy of Product
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = null,Object? price = null,Object? category = null,Object? sizes = null,Object? imageUrl = null,Object? rating = null,Object? reviewCount = null,Object? stock = null,Object? isFeatured = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = null,Object? price = null,Object? imageUrls = null,Object? category = null,Object? sizes = null,Object? colors = null,Object? stock = null,Object? createdAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
-as double,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as double,imageUrls: null == imageUrls ? _self.imageUrls : imageUrls // ignore: cast_nullable_to_non_nullable
+as List<String>,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as String,sizes: null == sizes ? _self.sizes : sizes // ignore: cast_nullable_to_non_nullable
-as List<int>,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String,rating: null == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
-as double,reviewCount: null == reviewCount ? _self.reviewCount : reviewCount // ignore: cast_nullable_to_non_nullable
-as int,stock: null == stock ? _self.stock : stock // ignore: cast_nullable_to_non_nullable
-as int,isFeatured: null == isFeatured ? _self.isFeatured : isFeatured // ignore: cast_nullable_to_non_nullable
-as bool,
+as List<int>,colors: null == colors ? _self.colors : colors // ignore: cast_nullable_to_non_nullable
+as List<String>,stock: null == stock ? _self.stock : stock // ignore: cast_nullable_to_non_nullable
+as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
   ));
 }
 
@@ -163,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String description,  double price,  String category,  List<int> sizes,  String imageUrl,  double rating,  int reviewCount,  int stock,  bool isFeatured)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String description,  double price,  List<String> imageUrls,  String category,  List<int> sizes,  List<String> colors,  int stock, @JsonKey(fromJson: _dateTimeFromTimestamp, toJson: _dateTimeToTimestamp)  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Product() when $default != null:
-return $default(_that.id,_that.name,_that.description,_that.price,_that.category,_that.sizes,_that.imageUrl,_that.rating,_that.reviewCount,_that.stock,_that.isFeatured);case _:
+return $default(_that.id,_that.name,_that.description,_that.price,_that.imageUrls,_that.category,_that.sizes,_that.colors,_that.stock,_that.createdAt);case _:
   return orElse();
 
 }
@@ -184,10 +183,10 @@ return $default(_that.id,_that.name,_that.description,_that.price,_that.category
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String description,  double price,  String category,  List<int> sizes,  String imageUrl,  double rating,  int reviewCount,  int stock,  bool isFeatured)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String description,  double price,  List<String> imageUrls,  String category,  List<int> sizes,  List<String> colors,  int stock, @JsonKey(fromJson: _dateTimeFromTimestamp, toJson: _dateTimeToTimestamp)  DateTime createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _Product():
-return $default(_that.id,_that.name,_that.description,_that.price,_that.category,_that.sizes,_that.imageUrl,_that.rating,_that.reviewCount,_that.stock,_that.isFeatured);case _:
+return $default(_that.id,_that.name,_that.description,_that.price,_that.imageUrls,_that.category,_that.sizes,_that.colors,_that.stock,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +203,10 @@ return $default(_that.id,_that.name,_that.description,_that.price,_that.category
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String description,  double price,  String category,  List<int> sizes,  String imageUrl,  double rating,  int reviewCount,  int stock,  bool isFeatured)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String description,  double price,  List<String> imageUrls,  String category,  List<int> sizes,  List<String> colors,  int stock, @JsonKey(fromJson: _dateTimeFromTimestamp, toJson: _dateTimeToTimestamp)  DateTime createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _Product() when $default != null:
-return $default(_that.id,_that.name,_that.description,_that.price,_that.category,_that.sizes,_that.imageUrl,_that.rating,_that.reviewCount,_that.stock,_that.isFeatured);case _:
+return $default(_that.id,_that.name,_that.description,_that.price,_that.imageUrls,_that.category,_that.sizes,_that.colors,_that.stock,_that.createdAt);case _:
   return null;
 
 }
@@ -218,14 +217,21 @@ return $default(_that.id,_that.name,_that.description,_that.price,_that.category
 /// @nodoc
 @JsonSerializable()
 
-class _Product implements Product {
-  const _Product({required this.id, required this.name, required this.description, required this.price, required this.category, required final  List<int> sizes, required this.imageUrl, required this.rating, required this.reviewCount, required this.stock, required this.isFeatured}): _sizes = sizes;
+class _Product extends Product {
+  const _Product({required this.id, required this.name, required this.description, required this.price, required final  List<String> imageUrls, required this.category, required final  List<int> sizes, required final  List<String> colors, required this.stock, @JsonKey(fromJson: _dateTimeFromTimestamp, toJson: _dateTimeToTimestamp) required this.createdAt}): _imageUrls = imageUrls,_sizes = sizes,_colors = colors,super._();
   factory _Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
 
 @override final  String id;
 @override final  String name;
 @override final  String description;
 @override final  double price;
+ final  List<String> _imageUrls;
+@override List<String> get imageUrls {
+  if (_imageUrls is EqualUnmodifiableListView) return _imageUrls;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_imageUrls);
+}
+
 @override final  String category;
  final  List<int> _sizes;
 @override List<int> get sizes {
@@ -234,11 +240,15 @@ class _Product implements Product {
   return EqualUnmodifiableListView(_sizes);
 }
 
-@override final  String imageUrl;
-@override final  double rating;
-@override final  int reviewCount;
+ final  List<String> _colors;
+@override List<String> get colors {
+  if (_colors is EqualUnmodifiableListView) return _colors;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_colors);
+}
+
 @override final  int stock;
-@override final  bool isFeatured;
+@override@JsonKey(fromJson: _dateTimeFromTimestamp, toJson: _dateTimeToTimestamp) final  DateTime createdAt;
 
 /// Create a copy of Product
 /// with the given fields replaced by the non-null parameter values.
@@ -253,16 +263,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Product&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.category, category) || other.category == category)&&const DeepCollectionEquality().equals(other._sizes, _sizes)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.reviewCount, reviewCount) || other.reviewCount == reviewCount)&&(identical(other.stock, stock) || other.stock == stock)&&(identical(other.isFeatured, isFeatured) || other.isFeatured == isFeatured));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Product&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&const DeepCollectionEquality().equals(other._imageUrls, _imageUrls)&&(identical(other.category, category) || other.category == category)&&const DeepCollectionEquality().equals(other._sizes, _sizes)&&const DeepCollectionEquality().equals(other._colors, _colors)&&(identical(other.stock, stock) || other.stock == stock)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,description,price,category,const DeepCollectionEquality().hash(_sizes),imageUrl,rating,reviewCount,stock,isFeatured);
+int get hashCode => Object.hash(runtimeType,id,name,description,price,const DeepCollectionEquality().hash(_imageUrls),category,const DeepCollectionEquality().hash(_sizes),const DeepCollectionEquality().hash(_colors),stock,createdAt);
 
 @override
 String toString() {
-  return 'Product(id: $id, name: $name, description: $description, price: $price, category: $category, sizes: $sizes, imageUrl: $imageUrl, rating: $rating, reviewCount: $reviewCount, stock: $stock, isFeatured: $isFeatured)';
+  return 'Product(id: $id, name: $name, description: $description, price: $price, imageUrls: $imageUrls, category: $category, sizes: $sizes, colors: $colors, stock: $stock, createdAt: $createdAt)';
 }
 
 
@@ -273,7 +283,7 @@ abstract mixin class _$ProductCopyWith<$Res> implements $ProductCopyWith<$Res> {
   factory _$ProductCopyWith(_Product value, $Res Function(_Product) _then) = __$ProductCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String description, double price, String category, List<int> sizes, String imageUrl, double rating, int reviewCount, int stock, bool isFeatured
+ String id, String name, String description, double price, List<String> imageUrls, String category, List<int> sizes, List<String> colors, int stock,@JsonKey(fromJson: _dateTimeFromTimestamp, toJson: _dateTimeToTimestamp) DateTime createdAt
 });
 
 
@@ -290,20 +300,19 @@ class __$ProductCopyWithImpl<$Res>
 
 /// Create a copy of Product
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = null,Object? price = null,Object? category = null,Object? sizes = null,Object? imageUrl = null,Object? rating = null,Object? reviewCount = null,Object? stock = null,Object? isFeatured = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = null,Object? price = null,Object? imageUrls = null,Object? category = null,Object? sizes = null,Object? colors = null,Object? stock = null,Object? createdAt = null,}) {
   return _then(_Product(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
-as double,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as double,imageUrls: null == imageUrls ? _self._imageUrls : imageUrls // ignore: cast_nullable_to_non_nullable
+as List<String>,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as String,sizes: null == sizes ? _self._sizes : sizes // ignore: cast_nullable_to_non_nullable
-as List<int>,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String,rating: null == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
-as double,reviewCount: null == reviewCount ? _self.reviewCount : reviewCount // ignore: cast_nullable_to_non_nullable
-as int,stock: null == stock ? _self.stock : stock // ignore: cast_nullable_to_non_nullable
-as int,isFeatured: null == isFeatured ? _self.isFeatured : isFeatured // ignore: cast_nullable_to_non_nullable
-as bool,
+as List<int>,colors: null == colors ? _self._colors : colors // ignore: cast_nullable_to_non_nullable
+as List<String>,stock: null == stock ? _self.stock : stock // ignore: cast_nullable_to_non_nullable
+as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
   ));
 }
 

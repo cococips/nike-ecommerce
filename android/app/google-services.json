@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "80419558247",
+    "project_id": "nike-store-app-fe8ff",
+    "storage_bucket": "nike-store-app-fe8ff.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80419558247:android:e2d1870f2298fa958c95c2",
+        "android_client_info": {
+          "package_name": "com.nike.nike_ecommerce"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYsr1mN5vJO_dvIbfHMCbFwPpYCi-KWGI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

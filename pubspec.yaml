@@ -43,7 +43,18 @@ dependencies:
   json_annotation: ^4.12.0
   fpdart: ^1.2.0
   firebase_auth: ^6.5.3
-
+  logger: ^2.7.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  path_provider: ^2.1.6
+  flutter_secure_storage: ^10.3.1
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+  firebase_crashlytics: ^5.2.4
+  image_picker: ^1.2.2
+  firebase_storage: ^13.4.3
+  google_sign_in: ^6.2.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -58,28 +69,24 @@ dev_dependencies:
   freezed: ^3.2.6-dev.1
   json_serializable: ^6.14.0
   riverpod_generator: ^4.0.4
+  flutter_gen_runner: ^5.14.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
+  generate: true
 
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/
 
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/to/resolution-aware-images
+flutter_gen:
+  output: lib/core/assets/
+  line_length: 80
 
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/to/asset-from-package
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
