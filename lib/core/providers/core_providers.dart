@@ -5,6 +5,8 @@ import 'package:nike_ecommerce/features/auth/domain/repositories/auth_repository
 import 'package:nike_ecommerce/features/auth/data/repositories/firebase_auth_repository.dart';
 import 'package:nike_ecommerce/features/cart/data/repositories/firebase_cart_repository.dart';
 import 'package:nike_ecommerce/features/cart/domain/repositories/cart_repository.dart';
+import 'package:nike_ecommerce/features/wishlist/data/repositories/firebase_wishlist_repository.dart';
+import 'package:nike_ecommerce/features/wishlist/domain/repositories/wishlist_repository.dart';
 import 'package:nike_ecommerce/features/products/data/datasources/product_local_datasource.dart';
 import 'package:nike_ecommerce/features/products/data/datasources/product_remote_datasource.dart';
 import 'package:nike_ecommerce/features/products/data/repositories/firebase_product_repository.dart';
@@ -59,5 +61,13 @@ CartRepository cartRepository(Ref ref) {
   return FirebaseCartRepository(
     ref.watch(firebaseFirestoreProvider),
     ref.watch(authRepositoryProvider),
+  );
+}
+
+@Riverpod(keepAlive: true)
+WishlistRepository wishlistRepository(Ref ref) {
+  return FirebaseWishlistRepository(
+    ref.watch(firebaseFirestoreProvider),
+    ref.watch(firebaseAuthProvider),
   );
 }

@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nike_ecommerce/features/products/domain/models/product.dart';
+import 'package:nike_ecommerce/features/wishlist/presentation/providers/wishlist_providers.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends ConsumerWidget {
   final Product product;
 
   const ProductCard({super.key, required this.product});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final wishlist = ref.watch(wishlistProvider).value ?? [];
+    final isFavorite = wishlist.contains(product.id);
+
     return GestureDetector(
       onTap: () => context.push('/product-detail', extra: product),
       child: Container(
@@ -34,15 +39,18 @@ class ProductCard extends StatelessWidget {
                   color: Color(0xFFEEEEEE),
                   borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
                 ),
-                child: Hero(
-                  tag: 'product-${product.id}',
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Hero(
+                      tag: 'product-${product.id}',
                   child: product.imageUrls.isNotEmpty
                       ? ClipRRect(
                           borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                           child: Image.network(
                             product.imageUrls.first,
                             fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => const Icon(
+                            errorBuilder: (_, _, _) => const Icon(
                               Icons.image,
                               color: Colors.grey,
                               size: 48,
@@ -56,6 +64,36 @@ class ProductCard extends StatelessWidget {
                             size: 48,
                           ),
                         ),
+                    ),
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: GestureDetector(
+                        onTap: () {
+                          ref.read(wishlistProvider.notifier).toggleFavorite(product.id);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.1),
+                                blurRadius: 4,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            isFavorite ? Icons.favorite : Icons.favorite_border,
+                            color: isFavorite ? Colors.redAccent : Colors.grey.shade600,
+                            size: 18,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

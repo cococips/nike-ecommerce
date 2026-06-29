@@ -1,10 +1,11 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nike_ecommerce/features/cart/presentation/providers/cart_providers.dart';
 
 part 'cart_total_provider.g.dart';
 
 @riverpod
-double cartTotal(CartTotalRef ref) {
+double cartTotal(Ref ref) {
   final cartItemsAsync = ref.watch(cartProvider);
 
   return cartItemsAsync.maybeWhen(

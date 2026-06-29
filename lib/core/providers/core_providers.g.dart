@@ -362,3 +362,51 @@ final class CartRepositoryProvider
 }
 
 String _$cartRepositoryHash() => r'a74a9d1a028aeb58c8756866c092ba3fdb194ed3';
+
+@ProviderFor(wishlistRepository)
+final wishlistRepositoryProvider = WishlistRepositoryProvider._();
+
+final class WishlistRepositoryProvider
+    extends
+        $FunctionalProvider<
+          WishlistRepository,
+          WishlistRepository,
+          WishlistRepository
+        >
+    with $Provider<WishlistRepository> {
+  WishlistRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'wishlistRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$wishlistRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<WishlistRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  WishlistRepository create(Ref ref) {
+    return wishlistRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(WishlistRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<WishlistRepository>(value),
+    );
+  }
+}
+
+String _$wishlistRepositoryHash() =>
+    r'208416cfc816f17610f7b6703ed2dd608c449dcc';

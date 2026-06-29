@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:nike_ecommerce/l10n/app_localizations.dart';
 import 'package:nike_ecommerce/features/products/presentation/providers/product_providers.dart';
 import 'package:nike_ecommerce/features/products/presentation/widgets/product_card.dart';

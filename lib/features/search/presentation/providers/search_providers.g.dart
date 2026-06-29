@@ -150,4 +150,4 @@ final class SearchFilteredProductsProvider
 }
 
 String _$searchFilteredProductsHash() =>
-    r'e09e04f3b6ed187a76010a116de9a62d29201892';
+    r'0578984cde9f300c531acb9e1186a963a87a8093';

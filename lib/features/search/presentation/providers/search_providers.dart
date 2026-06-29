@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nike_ecommerce/features/products/domain/models/product.dart';
 import 'package:nike_ecommerce/features/products/presentation/providers/product_providers.dart';
 
@@ -21,7 +22,7 @@ class SearchCategory extends _$SearchCategory {
 }
 
 @riverpod
-Future<List<Product>> searchFilteredProducts(SearchFilteredProductsRef ref) async {
+Future<List<Product>> searchFilteredProducts(Ref ref) async {
   final products = await ref.watch(productsProvider.future);
   final query = ref.watch(searchQueryProvider).toLowerCase();
   final category = ref.watch(searchCategoryProvider);

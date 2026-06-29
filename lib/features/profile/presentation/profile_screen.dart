@@ -87,7 +87,7 @@ class ProfileScreen extends ConsumerWidget {
               icon: Icons.favorite_border_rounded,
               title: 'Favorit',
               onTap: () {
-                // TODO: Navigate to Favorites
+                context.push('/wishlist');
               },
             ),
             _buildProfileMenu(

@@ -38,10 +38,10 @@ Berikut adalah rencana fitur yang harus dikerjakan selanjutnya secara bertahap:
 - [x] Tambahkan bilah pencarian untuk mencari nama sepatu.
 - [x] Tambahkan tombol filter kategori (misal: *Running, Basketball, Lifestyle*).
 
-### [ ] Tahap 4: Sistem Favorit (Wishlist)
-- [ ] Fungsikan tombol *Love* (Favorit) di setiap kartu/detail produk.
-- [ ] Simpan daftar produk yang disukai ke Firestore (berdasarkan akun *user*).
-- [ ] Tampilkan produk favorit tersebut di dalam menu **Favorit** (di halaman Profile).
+### [x] Tahap 4: Sistem Favorit (Wishlist)
+- [x] Fungsikan tombol *Love* (Favorit) di setiap kartu/detail produk.
+- [x] Simpan daftar produk yang disukai ke Firestore (berdasarkan akun *user*).
+- [x] Tampilkan produk favorit tersebut di dalam menu **Favorit** (di halaman Profile).
 
 ### [ ] Tahap 5: Checkout & Riwayat Pesanan
 - [ ] Buat alur konfirmasi *Checkout* saat menekan tombol beli di keranjang.

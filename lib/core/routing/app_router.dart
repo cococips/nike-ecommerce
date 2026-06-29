@@ -10,6 +10,7 @@ import 'package:nike_ecommerce/features/admin/presentation/screens/admin_product
 import 'package:nike_ecommerce/features/admin/presentation/screens/add_edit_product_screen.dart';
 import 'package:nike_ecommerce/features/products/domain/models/product.dart';
 import 'package:nike_ecommerce/features/products/presentation/screens/product_detail_screen.dart';
+import 'package:nike_ecommerce/features/wishlist/presentation/screens/wishlist_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authStateChangesProvider);
@@ -76,6 +77,10 @@ final routerProvider = Provider<GoRouter>((ref) {
           final product = state.extra as Product;
           return ProductDetailScreen(product: product);
         },
+      ),
+      GoRoute(
+        path: '/wishlist',
+        builder: (context, state) => const WishlistScreen(),
       ),
     ],
   );

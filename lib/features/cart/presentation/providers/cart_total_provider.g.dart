@@ -48,4 +48,4 @@ final class CartTotalProvider
   }
 }
 
-String _$cartTotalHash() => r'a8f8f08b44233bddb14ba08242f988fa0d1bb03a';
+String _$cartTotalHash() => r'd1f5fb33e4b2153fea8272780e9b7ea255eacaab';

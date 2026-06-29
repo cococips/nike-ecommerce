@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:nike_ecommerce/features/cart/domain/models/cart_item.dart';
 import 'package:nike_ecommerce/features/cart/presentation/providers/cart_providers.dart';
 import 'package:nike_ecommerce/features/products/domain/models/product.dart';
+import 'package:nike_ecommerce/features/wishlist/presentation/providers/wishlist_providers.dart';
 import 'package:uuid/uuid.dart';
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
@@ -83,6 +84,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   Widget build(BuildContext context) {
     final product = widget.product;
     final theme = Theme.of(context);
+    final wishlist = ref.watch(wishlistProvider).value ?? [];
+    final isFavorite = wishlist.contains(product.id);
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -266,15 +269,24 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
               child: SafeArea(
                 child: Row(
                   children: [
-                    // Favorite button can go here (Tahap 4)
-                    Container(
-                      width: 56,
-                      height: 56,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade300),
-                        borderRadius: BorderRadius.circular(15),
+                    // Favorite button
+                    GestureDetector(
+                      onTap: () {
+                        ref.read(wishlistProvider.notifier).toggleFavorite(product.id);
+                      },
+                      child: Container(
+                        width: 56,
+                        height: 56,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: isFavorite ? Colors.redAccent.withValues(alpha: 0.5) : Colors.grey.shade300),
+                          borderRadius: BorderRadius.circular(15),
+                          color: isFavorite ? Colors.redAccent.withValues(alpha: 0.05) : Colors.transparent,
+                        ),
+                        child: Icon(
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color: isFavorite ? Colors.redAccent : Colors.black,
+                        ),
                       ),
-                      child: const Icon(Icons.favorite_border, color: Colors.black),
                     ),
                     const SizedBox(width: 16),
                     // Add to Bag Button
