@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nike_ecommerce/l10n/app_localizations.dart';
 import 'package:nike_ecommerce/features/products/presentation/providers/product_providers.dart';
 
@@ -43,19 +44,21 @@ class HomeScreen extends ConsumerWidget {
               itemCount: products.length,
               itemBuilder: (context, index) {
                 final product = products[index];
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.05),
-                        blurRadius: 10,
-                        offset: const Offset(0, 5),
-                      ),
-                    ],
-                  ),
-                  child: Column(
+                return GestureDetector(
+                  onTap: () => context.push('/product-detail', extra: product),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.05),
+                          blurRadius: 10,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Placeholder Image
@@ -110,11 +113,12 @@ class HomeScreen extends ConsumerWidget {
                       ),
                     ],
                   ),
-                );
-              },
-            ),
-          );
-        },
+                ),
+              );
+            },
+          ), // closes GridView.builder
+        ); // closes RefreshIndicator
+      },
         loading: () {
           // Skeleton Loader
           return GridView.builder(

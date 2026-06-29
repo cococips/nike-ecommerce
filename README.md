@@ -27,11 +27,11 @@ Aplikasi *e-commerce* premium modern untuk katalog dan penjualan sepatu Nike. Pr
 
 Berikut adalah rencana fitur yang harus dikerjakan selanjutnya secara bertahap:
 
-### [ ] Tahap 2: Keranjang Belanja (Shopping Cart)
-- [ ] Ubah halaman **Bag** menjadi daftar keranjang sungguhan.
-- [ ] Buat logika *state management* untuk menyimpan produk yang ditambahkan ke keranjang.
-- [ ] Tambahkan fungsionalitas tambah (+), kurangi (-), dan hapus barang di keranjang.
-- [ ] Kalkulasi total harga otomatis.
+### [x] Tahap 2: Keranjang Belanja (Shopping Cart)
+- [x] Ubah halaman **Bag** menjadi daftar keranjang sungguhan.
+- [x] Buat logika *state management* untuk menyimpan produk yang ditambahkan ke keranjang.
+- [x] Tambahkan fungsionalitas tambah (+), kurangi (-), dan hapus barang di keranjang.
+- [x] Kalkulasi total harga otomatis.
 
 ### [ ] Tahap 3: Sistem Pencarian & Filter (Search)
 - [ ] Ubah halaman **Search** menjadi fungsional.
