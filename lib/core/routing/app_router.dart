@@ -8,6 +8,8 @@ import 'package:nike_ecommerce/features/main/presentation/main_screen.dart';
 import 'package:nike_ecommerce/features/admin/presentation/screens/settings_screen.dart';
 import 'package:nike_ecommerce/features/admin/presentation/screens/admin_products_screen.dart';
 import 'package:nike_ecommerce/features/admin/presentation/screens/add_edit_product_screen.dart';
+import 'package:nike_ecommerce/features/orders/presentation/screens/checkout_screen.dart';
+import 'package:nike_ecommerce/features/orders/presentation/screens/orders_screen.dart';
 import 'package:nike_ecommerce/features/products/domain/models/product.dart';
 import 'package:nike_ecommerce/features/products/presentation/screens/product_detail_screen.dart';
 import 'package:nike_ecommerce/features/wishlist/presentation/screens/wishlist_screen.dart';
@@ -81,6 +83,14 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/wishlist',
         builder: (context, state) => const WishlistScreen(),
+      ),
+      GoRoute(
+        path: '/checkout',
+        builder: (context, state) => const CheckoutScreen(),
+      ),
+      GoRoute(
+        path: '/orders',
+        builder: (context, state) => const OrdersScreen(),
       ),
     ],
   );

@@ -80,7 +80,7 @@ class ProfileScreen extends ConsumerWidget {
               icon: Icons.shopping_bag_outlined,
               title: 'Pesanan Saya',
               onTap: () {
-                // TODO: Navigate to Orders
+                context.push('/orders');
               },
             ),
             _buildProfileMenu(

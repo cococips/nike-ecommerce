@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nike_ecommerce/features/cart/presentation/providers/cart_providers.dart';
 import 'package:nike_ecommerce/features/cart/presentation/providers/cart_total_provider.dart';
 
@@ -195,10 +196,7 @@ class BagScreen extends ConsumerWidget {
                         height: 56,
                         child: ElevatedButton(
                           onPressed: () {
-                            // Checkout logic for Tahap 5
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Checkout is under construction (Tahap 5)')),
-                            );
+                            context.push('/checkout');
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,

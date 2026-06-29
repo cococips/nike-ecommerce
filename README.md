@@ -43,11 +43,11 @@ Berikut adalah rencana fitur yang harus dikerjakan selanjutnya secara bertahap:
 - [x] Simpan daftar produk yang disukai ke Firestore (berdasarkan akun *user*).
 - [x] Tampilkan produk favorit tersebut di dalam menu **Favorit** (di halaman Profile).
 
-### [ ] Tahap 5: Checkout & Riwayat Pesanan
-- [ ] Buat alur konfirmasi *Checkout* saat menekan tombol beli di keranjang.
-- [ ] Buat form pengisian alamat simulasi.
-- [ ] Pindahkan produk yang di-*checkout* ke koleksi "Riwayat Pesanan".
-- [ ] Tampilkan data riwayat belanja di dalam menu **Pesanan Saya** (di halaman Profile).
+### [x] Tahap 5: Checkout & Riwayat Pesanan
+- [x] Buat alur konfirmasi *Checkout* saat menekan tombol beli di keranjang.
+- [x] Buat form pengisian alamat simulasi.
+- [x] Pindahkan produk yang di-*checkout* ke koleksi "Riwayat Pesanan".
+- [x] Tampilkan data riwayat belanja di dalam menu **Pesanan Saya** (di halaman Profile).
 
 ### [ ] Tahap 6: Poles UI Premium & Animasi
 - [ ] **Hero Animations:** Transisi membesar saat menekan gambar sepatu dari *Home* ke *Detail*.
