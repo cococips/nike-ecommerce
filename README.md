@@ -33,10 +33,10 @@ Berikut adalah rencana fitur yang harus dikerjakan selanjutnya secara bertahap:
 - [x] Tambahkan fungsionalitas tambah (+), kurangi (-), dan hapus barang di keranjang.
 - [x] Kalkulasi total harga otomatis.
 
-### [ ] Tahap 3: Sistem Pencarian & Filter (Search)
-- [ ] Ubah halaman **Search** menjadi fungsional.
-- [ ] Tambahkan bilah pencarian untuk mencari nama sepatu.
-- [ ] Tambahkan tombol filter kategori (misal: *Running, Basketball, Lifestyle*).
+### [x] Tahap 3: Sistem Pencarian & Filter (Search)
+- [x] Ubah halaman **Search** menjadi fungsional.
+- [x] Tambahkan bilah pencarian untuk mencari nama sepatu.
+- [x] Tambahkan tombol filter kategori (misal: *Running, Basketball, Lifestyle*).
 
 ### [ ] Tahap 4: Sistem Favorit (Wishlist)
 - [ ] Fungsikan tombol *Love* (Favorit) di setiap kartu/detail produk.
