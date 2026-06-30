@@ -27,6 +27,7 @@ class CheckoutController extends _$CheckoutController {
   Future<void> placeOrder({
     required String recipientName,
     required String address,
+    required String paymentMethod,
   }) async {
     state = true;
     try {
@@ -46,12 +47,38 @@ class CheckoutController extends _$CheckoutController {
         totalAmount: totalAmount,
         recipientName: recipientName,
         address: address,
+        status: 'Dikemas',
+        paymentMethod: paymentMethod,
         createdAt: DateTime.now(),
       );
 
       await orderRepository.placeOrder(order, user.id);
       
       // Riverpod state for cart is auto-refreshed via stream from Firestore (since batch deletes the cart docs)
+    } finally {
+      state = false;
+    }
+  }
+}
+
+@riverpod
+Stream<List<OrderModel>> allOrders(Ref ref) {
+  final orderRepository = ref.watch(orderRepositoryProvider);
+  return orderRepository.getAllOrders();
+}
+
+@riverpod
+class AdminOrderController extends _$AdminOrderController {
+  @override
+  bool build() => false;
+
+  Future<void> updateOrderStatus(String userId, String orderId, String status) async {
+    state = true;
+    try {
+      final repository = ref.read(orderRepositoryProvider);
+      await repository.updateOrderStatus(userId, orderId, status);
+    } catch (e) {
+      throw Exception('Failed to update order status: $e');
     } finally {
       state = false;
     }

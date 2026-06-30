@@ -16,11 +16,14 @@ class StorageService {
 
   Future<Either<Failure, String>> uploadImage(File file, String path) async {
     try {
-      final fileName = '${DateTime.now().millisecondsSinceEpoch}_${file.path.split('/').last}';
+      final fileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
       final ref = _storage.ref().child(path).child(fileName);
+      final metadata = SettableMetadata(
+        contentType: 'image/jpeg',
+      );
       
-      final uploadTask = await ref.putFile(file);
-      final downloadUrl = await uploadTask.ref.getDownloadURL();
+      final snapshot = await ref.putFile(file, metadata);
+      final downloadUrl = await snapshot.ref.getDownloadURL();
       
       log.d('Successfully uploaded image to $downloadUrl');
       return right(downloadUrl);

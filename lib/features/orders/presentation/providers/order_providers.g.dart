@@ -81,9 +81,101 @@ final class CheckoutControllerProvider
 }
 
 String _$checkoutControllerHash() =>
-    r'ec5d6bbeaf9331781674c1aa9277f0db4851bf04';
+    r'54badd4a8b115259c6a88fd37180cc90def4220d';
 
 abstract class _$CheckoutController extends $Notifier<bool> {
+  bool build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<bool, bool>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<bool, bool>,
+              bool,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}
+
+@ProviderFor(allOrders)
+final allOrdersProvider = AllOrdersProvider._();
+
+final class AllOrdersProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<OrderModel>>,
+          List<OrderModel>,
+          Stream<List<OrderModel>>
+        >
+    with $FutureModifier<List<OrderModel>>, $StreamProvider<List<OrderModel>> {
+  AllOrdersProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'allOrdersProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$allOrdersHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<List<OrderModel>> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<List<OrderModel>> create(Ref ref) {
+    return allOrders(ref);
+  }
+}
+
+String _$allOrdersHash() => r'dc128eace81ad330af31100471d67a6a8aca9bfb';
+
+@ProviderFor(AdminOrderController)
+final adminOrderControllerProvider = AdminOrderControllerProvider._();
+
+final class AdminOrderControllerProvider
+    extends $NotifierProvider<AdminOrderController, bool> {
+  AdminOrderControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'adminOrderControllerProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$adminOrderControllerHash();
+
+  @$internal
+  @override
+  AdminOrderController create() => AdminOrderController();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+}
+
+String _$adminOrderControllerHash() =>
+    r'2f1a757e2e8250a3255b5e7d144277781c709cc0';
+
+abstract class _$AdminOrderController extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override

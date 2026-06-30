@@ -18,7 +18,10 @@ class ProductLocalDataSourceImpl implements ProductLocalDataSource {
       await box.clear();
       // Save new products as JSON map
       final Map<String, Map> mapToSave = {
-        for (var p in products) p.id: p.toJson()
+        for (var p in products) p.id: {
+          ...p.toJson(),
+          'createdAt': p.createdAt.toIso8601String(),
+        }
       };
       await box.putAll(mapToSave);
       log.d('Cached ${products.length} products locally.');

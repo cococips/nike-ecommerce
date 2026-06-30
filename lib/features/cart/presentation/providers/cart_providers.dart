@@ -2,6 +2,8 @@ import 'package:nike_ecommerce/core/providers/core_providers.dart';
 import 'package:nike_ecommerce/features/cart/domain/models/cart_item.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import 'package:nike_ecommerce/features/auth/presentation/providers/auth_providers.dart';
+
 part 'cart_providers.g.dart';
 
 @riverpod
@@ -12,6 +14,11 @@ class CartNotifier extends _$CartNotifier {
   }
 
   Future<List<CartItem>> _fetchCart() async {
+    final user = ref.watch(currentUserProvider);
+    if (user == null) {
+      return [];
+    }
+
     final repository = ref.watch(cartRepositoryProvider);
     final result = await repository.getCart();
     

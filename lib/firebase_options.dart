@@ -40,7 +40,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '80419558247',
     projectId: 'nike-store-app-fe8ff',
     authDomain: 'nike-store-app-fe8ff.firebaseapp.com',
-    storageBucket: 'nike-store-app-fe8ff.firebasestorage.app',
+    storageBucket: 'nike-store-app-fe8ff.appspot.com',
     measurementId: 'G-4N2NRVSQQC',
   );
 
@@ -49,7 +49,7 @@ class DefaultFirebaseOptions {
     appId: '1:80419558247:ios:63acffb5753da7e38c95c2',
     messagingSenderId: '80419558247',
     projectId: 'nike-store-app-fe8ff',
-    storageBucket: 'nike-store-app-fe8ff.firebasestorage.app',
+    storageBucket: 'nike-store-app-fe8ff.appspot.com',
     iosBundleId: 'com.nike.nikeEcommerce',
   );
 
@@ -58,7 +58,7 @@ class DefaultFirebaseOptions {
     appId: '1:80419558247:android:e2d1870f2298fa958c95c2',
     messagingSenderId: '80419558247',
     projectId: 'nike-store-app-fe8ff',
-    storageBucket: 'nike-store-app-fe8ff.firebasestorage.app',
+    storageBucket: 'nike-store-app-fe8ff.appspot.com',
   );
 
 }

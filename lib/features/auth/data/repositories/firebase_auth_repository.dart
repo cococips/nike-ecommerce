@@ -13,16 +13,19 @@ class FirebaseAuthRepository implements AuthRepository {
 
   AppUser? _mapFirebaseUser(User? user) {
     if (user == null) return null;
+    final email = user.email ?? '';
+    final isAdmin = email.toLowerCase() == 'admin@gmail.com';
     return AppUser(
       id: user.uid,
-      email: user.email ?? '',
+      email: email,
       displayName: user.displayName,
       photoUrl: user.photoURL,
+      isAdmin: isAdmin,
     );
   }
 
   @override
-  Stream<AppUser?> get authStateChanges => _auth.authStateChanges().map(_mapFirebaseUser);
+  Stream<AppUser?> get authStateChanges => _auth.userChanges().map(_mapFirebaseUser);
 
   @override
   AppUser? get currentUser => _mapFirebaseUser(_auth.currentUser);
@@ -105,6 +108,32 @@ class FirebaseAuthRepository implements AuthRepository {
       await _googleSignIn.signOut();
       await _auth.signOut();
       return right(null);
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateProfile({String? name, String? photoUrl}) async {
+    try {
+      final user = _auth.currentUser;
+      if (user == null) {
+        return left(const Failure('User not authenticated'));
+      }
+
+      if (name != null) {
+        await user.updateDisplayName(name);
+      }
+      if (photoUrl != null && photoUrl.isNotEmpty) {
+        await user.updatePhotoURL(photoUrl);
+      }
+
+      // Force refresh current user
+      await user.reload();
+      
+      return right(null);
+    } on FirebaseAuthException catch (e) {
+      return left(Failure(e.message ?? 'Failed to update profile'));
     } catch (e) {
       return left(Failure(e.toString()));
     }

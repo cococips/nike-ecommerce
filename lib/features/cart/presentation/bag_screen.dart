@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nike_ecommerce/features/cart/presentation/providers/cart_providers.dart';
 import 'package:nike_ecommerce/features/cart/presentation/providers/cart_total_provider.dart';
+import 'package:nike_ecommerce/core/utils/currency_formatter.dart';
 
 class BagScreen extends ConsumerWidget {
   const BagScreen({super.key});
@@ -96,7 +97,7 @@ class BagScreen extends ConsumerWidget {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  '\$${product.price.toStringAsFixed(2)}  •  Size: ${item.selectedSize}',
+                                  '${product.price.toIdr()}  •  Size: ${item.selectedSize}',
                                   style: const TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14,
@@ -182,7 +183,7 @@ class BagScreen extends ConsumerWidget {
                             ),
                           ),
                           Text(
-                            '\$${total.toStringAsFixed(2)}',
+                            total.toIdr(),
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.w900,

@@ -5,6 +5,7 @@ import 'package:nike_ecommerce/features/cart/domain/models/cart_item.dart';
 import 'package:nike_ecommerce/features/cart/presentation/providers/cart_providers.dart';
 import 'package:nike_ecommerce/features/products/domain/models/product.dart';
 import 'package:nike_ecommerce/features/wishlist/presentation/providers/wishlist_providers.dart';
+import 'package:nike_ecommerce/core/utils/currency_formatter.dart';
 import 'package:uuid/uuid.dart';
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
@@ -55,11 +56,11 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Added to bag successfully'),
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.black87,
             behavior: SnackBarBehavior.floating,
           ),
         );
-        context.pop();
+        context.push('/checkout');
       }
     } catch (e) {
       if (mounted) {
@@ -164,7 +165,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                             ),
                           ),
                           Text(
-                            '\$${product.price.toStringAsFixed(2)}',
+                            product.price.toIdr(),
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.w900,

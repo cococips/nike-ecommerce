@@ -8,6 +8,8 @@ part 'order.g.dart';
 @freezed
 abstract class OrderModel with _$OrderModel {
   const OrderModel._();
+  
+  @JsonSerializable(explicitToJson: true)
   const factory OrderModel({
     required String id,
     required String userId,
@@ -15,6 +17,8 @@ abstract class OrderModel with _$OrderModel {
     required double totalAmount,
     required String recipientName,
     required String address,
+    @Default('Dikemas') String status,
+    @Default('') String paymentMethod,
     @TimestampConverter() required DateTime createdAt,
   }) = _OrderModel;
 

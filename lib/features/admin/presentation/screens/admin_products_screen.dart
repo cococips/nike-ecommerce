@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nike_ecommerce/features/products/presentation/providers/product_providers.dart';
 import 'package:nike_ecommerce/features/admin/presentation/providers/admin_product_controller.dart';
+import 'package:nike_ecommerce/core/utils/currency_formatter.dart';
 
 class AdminProductsScreen extends ConsumerWidget {
   const AdminProductsScreen({super.key});
@@ -56,8 +57,8 @@ class AdminProductsScreen extends ConsumerWidget {
                           errorBuilder: (_, __, ___) => const Icon(Icons.image),
                         )
                       : const Icon(Icons.image, size: 50),
-                  title: Text(product.name),
-                  subtitle: Text('\$${product.price} - Stock: ${product.stock}'),
+                  title: Text(product.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                  subtitle: Text('${product.price.toIdr()} - Stock: ${product.stock}'),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

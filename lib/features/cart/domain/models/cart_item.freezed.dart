@@ -218,8 +218,8 @@ return $default(_that.id,_that.product,_that.selectedSize,_that.quantity);case _
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(explicitToJson: true)
 class _CartItem extends CartItem {
   const _CartItem({required this.id, required this.product, required this.selectedSize, required this.quantity}): super._();
   factory _CartItem.fromJson(Map<String, dynamic> json) => _$CartItemFromJson(json);

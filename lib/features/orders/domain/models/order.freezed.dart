@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$OrderModel {
 
- String get id; String get userId; List<CartItem> get items; double get totalAmount; String get recipientName; String get address;@TimestampConverter() DateTime get createdAt;
+ String get id; String get userId; List<CartItem> get items; double get totalAmount; String get recipientName; String get address; String get status; String get paymentMethod;@TimestampConverter() DateTime get createdAt;
 /// Create a copy of OrderModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $OrderModelCopyWith<OrderModel> get copyWith => _$OrderModelCopyWithImpl<OrderMo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OrderModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&const DeepCollectionEquality().equals(other.items, items)&&(identical(other.totalAmount, totalAmount) || other.totalAmount == totalAmount)&&(identical(other.recipientName, recipientName) || other.recipientName == recipientName)&&(identical(other.address, address) || other.address == address)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OrderModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&const DeepCollectionEquality().equals(other.items, items)&&(identical(other.totalAmount, totalAmount) || other.totalAmount == totalAmount)&&(identical(other.recipientName, recipientName) || other.recipientName == recipientName)&&(identical(other.address, address) || other.address == address)&&(identical(other.status, status) || other.status == status)&&(identical(other.paymentMethod, paymentMethod) || other.paymentMethod == paymentMethod)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,const DeepCollectionEquality().hash(items),totalAmount,recipientName,address,createdAt);
+int get hashCode => Object.hash(runtimeType,id,userId,const DeepCollectionEquality().hash(items),totalAmount,recipientName,address,status,paymentMethod,createdAt);
 
 @override
 String toString() {
-  return 'OrderModel(id: $id, userId: $userId, items: $items, totalAmount: $totalAmount, recipientName: $recipientName, address: $address, createdAt: $createdAt)';
+  return 'OrderModel(id: $id, userId: $userId, items: $items, totalAmount: $totalAmount, recipientName: $recipientName, address: $address, status: $status, paymentMethod: $paymentMethod, createdAt: $createdAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $OrderModelCopyWith<$Res>  {
   factory $OrderModelCopyWith(OrderModel value, $Res Function(OrderModel) _then) = _$OrderModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String userId, List<CartItem> items, double totalAmount, String recipientName, String address,@TimestampConverter() DateTime createdAt
+ String id, String userId, List<CartItem> items, double totalAmount, String recipientName, String address, String status, String paymentMethod,@TimestampConverter() DateTime createdAt
 });
 
 
@@ -65,7 +65,7 @@ class _$OrderModelCopyWithImpl<$Res>
 
 /// Create a copy of OrderModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? items = null,Object? totalAmount = null,Object? recipientName = null,Object? address = null,Object? createdAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? items = null,Object? totalAmount = null,Object? recipientName = null,Object? address = null,Object? status = null,Object? paymentMethod = null,Object? createdAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -73,6 +73,8 @@ as String,items: null == items ? _self.items : items // ignore: cast_nullable_to
 as List<CartItem>,totalAmount: null == totalAmount ? _self.totalAmount : totalAmount // ignore: cast_nullable_to_non_nullable
 as double,recipientName: null == recipientName ? _self.recipientName : recipientName // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
+as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as String,paymentMethod: null == paymentMethod ? _self.paymentMethod : paymentMethod // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
@@ -159,10 +161,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  List<CartItem> items,  double totalAmount,  String recipientName,  String address, @TimestampConverter()  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  List<CartItem> items,  double totalAmount,  String recipientName,  String address,  String status,  String paymentMethod, @TimestampConverter()  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _OrderModel() when $default != null:
-return $default(_that.id,_that.userId,_that.items,_that.totalAmount,_that.recipientName,_that.address,_that.createdAt);case _:
+return $default(_that.id,_that.userId,_that.items,_that.totalAmount,_that.recipientName,_that.address,_that.status,_that.paymentMethod,_that.createdAt);case _:
   return orElse();
 
 }
@@ -180,10 +182,10 @@ return $default(_that.id,_that.userId,_that.items,_that.totalAmount,_that.recipi
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  List<CartItem> items,  double totalAmount,  String recipientName,  String address, @TimestampConverter()  DateTime createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  List<CartItem> items,  double totalAmount,  String recipientName,  String address,  String status,  String paymentMethod, @TimestampConverter()  DateTime createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _OrderModel():
-return $default(_that.id,_that.userId,_that.items,_that.totalAmount,_that.recipientName,_that.address,_that.createdAt);case _:
+return $default(_that.id,_that.userId,_that.items,_that.totalAmount,_that.recipientName,_that.address,_that.status,_that.paymentMethod,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +202,10 @@ return $default(_that.id,_that.userId,_that.items,_that.totalAmount,_that.recipi
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  List<CartItem> items,  double totalAmount,  String recipientName,  String address, @TimestampConverter()  DateTime createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  List<CartItem> items,  double totalAmount,  String recipientName,  String address,  String status,  String paymentMethod, @TimestampConverter()  DateTime createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _OrderModel() when $default != null:
-return $default(_that.id,_that.userId,_that.items,_that.totalAmount,_that.recipientName,_that.address,_that.createdAt);case _:
+return $default(_that.id,_that.userId,_that.items,_that.totalAmount,_that.recipientName,_that.address,_that.status,_that.paymentMethod,_that.createdAt);case _:
   return null;
 
 }
@@ -212,10 +214,10 @@ return $default(_that.id,_that.userId,_that.items,_that.totalAmount,_that.recipi
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(explicitToJson: true)
 class _OrderModel extends OrderModel {
-  const _OrderModel({required this.id, required this.userId, required final  List<CartItem> items, required this.totalAmount, required this.recipientName, required this.address, @TimestampConverter() required this.createdAt}): _items = items,super._();
+  const _OrderModel({required this.id, required this.userId, required final  List<CartItem> items, required this.totalAmount, required this.recipientName, required this.address, this.status = 'Dikemas', this.paymentMethod = '', @TimestampConverter() required this.createdAt}): _items = items,super._();
   factory _OrderModel.fromJson(Map<String, dynamic> json) => _$OrderModelFromJson(json);
 
 @override final  String id;
@@ -230,6 +232,8 @@ class _OrderModel extends OrderModel {
 @override final  double totalAmount;
 @override final  String recipientName;
 @override final  String address;
+@override@JsonKey() final  String status;
+@override@JsonKey() final  String paymentMethod;
 @override@TimestampConverter() final  DateTime createdAt;
 
 /// Create a copy of OrderModel
@@ -245,16 +249,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OrderModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&const DeepCollectionEquality().equals(other._items, _items)&&(identical(other.totalAmount, totalAmount) || other.totalAmount == totalAmount)&&(identical(other.recipientName, recipientName) || other.recipientName == recipientName)&&(identical(other.address, address) || other.address == address)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OrderModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&const DeepCollectionEquality().equals(other._items, _items)&&(identical(other.totalAmount, totalAmount) || other.totalAmount == totalAmount)&&(identical(other.recipientName, recipientName) || other.recipientName == recipientName)&&(identical(other.address, address) || other.address == address)&&(identical(other.status, status) || other.status == status)&&(identical(other.paymentMethod, paymentMethod) || other.paymentMethod == paymentMethod)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,const DeepCollectionEquality().hash(_items),totalAmount,recipientName,address,createdAt);
+int get hashCode => Object.hash(runtimeType,id,userId,const DeepCollectionEquality().hash(_items),totalAmount,recipientName,address,status,paymentMethod,createdAt);
 
 @override
 String toString() {
-  return 'OrderModel(id: $id, userId: $userId, items: $items, totalAmount: $totalAmount, recipientName: $recipientName, address: $address, createdAt: $createdAt)';
+  return 'OrderModel(id: $id, userId: $userId, items: $items, totalAmount: $totalAmount, recipientName: $recipientName, address: $address, status: $status, paymentMethod: $paymentMethod, createdAt: $createdAt)';
 }
 
 
@@ -265,7 +269,7 @@ abstract mixin class _$OrderModelCopyWith<$Res> implements $OrderModelCopyWith<$
   factory _$OrderModelCopyWith(_OrderModel value, $Res Function(_OrderModel) _then) = __$OrderModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String userId, List<CartItem> items, double totalAmount, String recipientName, String address,@TimestampConverter() DateTime createdAt
+ String id, String userId, List<CartItem> items, double totalAmount, String recipientName, String address, String status, String paymentMethod,@TimestampConverter() DateTime createdAt
 });
 
 
@@ -282,7 +286,7 @@ class __$OrderModelCopyWithImpl<$Res>
 
 /// Create a copy of OrderModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? items = null,Object? totalAmount = null,Object? recipientName = null,Object? address = null,Object? createdAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? items = null,Object? totalAmount = null,Object? recipientName = null,Object? address = null,Object? status = null,Object? paymentMethod = null,Object? createdAt = null,}) {
   return _then(_OrderModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -290,6 +294,8 @@ as String,items: null == items ? _self._items : items // ignore: cast_nullable_t
 as List<CartItem>,totalAmount: null == totalAmount ? _self.totalAmount : totalAmount // ignore: cast_nullable_to_non_nullable
 as double,recipientName: null == recipientName ? _self.recipientName : recipientName // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
+as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as String,paymentMethod: null == paymentMethod ? _self.paymentMethod : paymentMethod // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));

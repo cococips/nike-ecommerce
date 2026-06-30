@@ -42,4 +42,30 @@ class FirebaseOrderRepository implements OrderRepository {
       }).toList();
     });
   }
+
+  @override
+  Stream<List<OrderModel>> getAllOrders() {
+    return _firestore
+        .collectionGroup('orders')
+        .snapshots()
+        .map((snapshot) {
+      final orders = snapshot.docs.map((doc) {
+        final data = doc.data();
+        data['id'] = doc.id;
+        return OrderModel.fromJson(data);
+      }).toList();
+      orders.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      return orders;
+    });
+  }
+
+  @override
+  Future<void> updateOrderStatus(String userId, String orderId, String status) async {
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('orders')
+        .doc(orderId)
+        .update({'status': status});
+  }
 }

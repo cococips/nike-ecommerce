@@ -21,6 +21,15 @@ class SettingsScreen extends StatelessWidget {
               context.push('/admin');
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.shopping_bag),
+            title: const Text('Manage Orders'),
+            subtitle: const Text('Update order status and view all orders'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              context.push('/admin/orders');
+            },
+          ),
           // More settings can be added here in the future
         ],
       ),

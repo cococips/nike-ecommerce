@@ -11,6 +11,7 @@ abstract class AppUser with _$AppUser {
     required String email,
     String? displayName,
     String? photoUrl,
+    @Default(false) bool isAdmin,
   }) = _AppUser;
 
   factory AppUser.fromJson(Map<String, dynamic> json) => _$AppUserFromJson(json);

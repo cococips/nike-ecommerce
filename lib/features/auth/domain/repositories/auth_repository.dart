@@ -10,4 +10,5 @@ abstract class AuthRepository {
   Future<Either<Failure, AppUser>> signUpWithEmail(String email, String password, String name);
   Future<Either<Failure, AppUser>> signInWithGoogle();
   Future<Either<Failure, void>> signOut();
+  Future<Either<Failure, void>> updateProfile({String? name, String? photoUrl});
 }

@@ -15,6 +15,8 @@ _OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => _OrderModel(
   totalAmount: (json['totalAmount'] as num).toDouble(),
   recipientName: json['recipientName'] as String,
   address: json['address'] as String,
+  status: json['status'] as String? ?? 'Dikemas',
+  paymentMethod: json['paymentMethod'] as String? ?? '',
   createdAt: const TimestampConverter().fromJson(
     json['createdAt'] as Timestamp,
   ),
@@ -24,9 +26,11 @@ Map<String, dynamic> _$OrderModelToJson(_OrderModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'userId': instance.userId,
-      'items': instance.items,
+      'items': instance.items.map((e) => e.toJson()).toList(),
       'totalAmount': instance.totalAmount,
       'recipientName': instance.recipientName,
       'address': instance.address,
+      'status': instance.status,
+      'paymentMethod': instance.paymentMethod,
       'createdAt': const TimestampConverter().toJson(instance.createdAt),
     };

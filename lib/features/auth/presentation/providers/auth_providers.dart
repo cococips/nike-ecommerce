@@ -12,6 +12,7 @@ Stream<AppUser?> authStateChanges(Ref ref) {
 
 @Riverpod(keepAlive: true)
 AppUser? currentUser(Ref ref) {
+  ref.watch(authStateChangesProvider);
   final authRepository = ref.watch(authRepositoryProvider);
   return authRepository.currentUser;
 }

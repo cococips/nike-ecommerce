@@ -1,87 +1,97 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nike_ecommerce/features/products/presentation/home_screen.dart';
 import 'package:nike_ecommerce/features/shop/presentation/shop_screen.dart';
 import 'package:nike_ecommerce/features/search/presentation/search_screen.dart';
 import 'package:nike_ecommerce/features/cart/presentation/bag_screen.dart';
 import 'package:nike_ecommerce/features/profile/presentation/profile_screen.dart';
-import 'package:nike_ecommerce/core/theme/app_colors.dart';
+import 'package:nike_ecommerce/features/main/presentation/providers/main_providers.dart';
 
-class MainScreen extends StatefulWidget {
+class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentIndex = ref.watch(mainTabIndexProvider);
 
-class _MainScreenState extends State<MainScreen> {
-  int _currentIndex = 0;
+    final List<Widget> screens = [
+      const HomeScreen(),
+      const ShopScreen(),
+      const SearchScreen(),
+      const BagScreen(),
+      const ProfileScreen(),
+    ];
 
-  final List<Widget> _screens = [
-    const HomeScreen(),
-    const ShopScreen(),
-    const SearchScreen(),
-    const BagScreen(),
-    const ProfileScreen(),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true, // Allows background content to flow under the floating nav bar
       body: IndexedStack(
-        index: _currentIndex,
-        children: _screens,
+        index: currentIndex,
+        children: screens,
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, -5),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 28, right: 28, bottom: 16),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.05),
+                  blurRadius: 15,
+                  offset: const Offset(0, 8),
+                ),
+              ],
             ),
-          ],
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.75), // Glassmorphism white
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(color: Colors.white.withValues(alpha: 0.6), width: 1.5),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildNavItem(Icons.home_outlined, Icons.home, 0, currentIndex, ref),
+                      _buildNavItem(Icons.storefront_outlined, Icons.storefront, 1, currentIndex, ref),
+                      _buildNavItem(Icons.search_outlined, Icons.search, 2, currentIndex, ref),
+                      _buildNavItem(Icons.shopping_bag_outlined, Icons.shopping_bag, 3, currentIndex, ref),
+                      _buildNavItem(Icons.person_outline, Icons.person, 4, currentIndex, ref),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
-        child: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          selectedItemColor: AppColors.primary,
-          unselectedItemColor: Colors.grey,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          elevation: 0,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.storefront_outlined),
-              activeIcon: Icon(Icons.storefront),
-              label: 'Shop',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search_outlined),
-              activeIcon: Icon(Icons.search),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_bag_outlined),
-              activeIcon: Icon(Icons.shopping_bag),
-              label: 'Bag',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              activeIcon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ],
+      ),
+    );
+  }
+
+  Widget _buildNavItem(IconData icon, IconData activeIcon, int index, int currentIndex, WidgetRef ref) {
+    final isSelected = currentIndex == index;
+    return GestureDetector(
+      onTap: () {
+        ref.read(mainTabIndexProvider.notifier).setIndex(index);
+      },
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+        padding: const EdgeInsets.all(10), // Smaller padding for a tighter fit
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.black : Colors.transparent, // Black circle for active state
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          isSelected ? activeIcon : icon,
+          color: isSelected ? Colors.white : Colors.black54, // White icon if active, grey if inactive
+          size: 24, // Smaller icon size
         ),
       ),
     );

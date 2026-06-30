@@ -12,7 +12,7 @@ class SearchScreen extends ConsumerWidget {
     final searchState = ref.watch(searchFilteredProductsProvider);
     final selectedCategory = ref.watch(searchCategoryProvider);
 
-    final categories = ['All', 'Running', 'Basketball', 'Lifestyle', 'Training'];
+    final categories = ['All', 'Running', 'Basketball', 'Football', 'Gym & Training', 'Trail Running'];
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,

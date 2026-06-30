@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nike_ecommerce/features/products/domain/models/product.dart';
@@ -33,8 +35,17 @@ class _AddEditProductScreenState extends ConsumerState<AddEditProductScreen> {
     final p = widget.product;
     _nameController = TextEditingController(text: p?.name ?? '');
     _descController = TextEditingController(text: p?.description ?? '');
-    _priceController = TextEditingController(text: p?.price.toString() ?? '');
-    _categoryController = TextEditingController(text: p?.category ?? 'Shoes');
+    
+    final initialPrice = p?.price.toInt() ?? 0;
+    _priceController = TextEditingController(
+      text: initialPrice > 0 
+          ? NumberFormat.currency(locale: 'id_ID', symbol: '', decimalDigits: 0).format(initialPrice) 
+          : '',
+    );
+    
+    final validCategories = ['Running', 'Basketball', 'Football', 'Gym & Training', 'Trail Running'];
+    final initialCat = p?.category ?? 'Running';
+    _categoryController = TextEditingController(text: validCategories.contains(initialCat) ? initialCat : 'Running');
     _stockController = TextEditingController(text: p?.stock.toString() ?? '10');
     _imageUrlController = TextEditingController();
     
@@ -89,7 +100,8 @@ class _AddEditProductScreenState extends ConsumerState<AddEditProductScreen> {
   void _saveProduct() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final price = double.tryParse(_priceController.text) ?? 0.0;
+    final priceString = _priceController.text.replaceAll(RegExp(r'[^0-9]'), '');
+    final price = double.tryParse(priceString) ?? 0.0;
     final stock = int.tryParse(_stockController.text) ?? 0;
 
     final product = Product(
@@ -171,7 +183,8 @@ class _AddEditProductScreenState extends ConsumerState<AddEditProductScreen> {
                     child: TextFormField(
                       controller: _priceController,
                       decoration: const InputDecoration(labelText: 'Price', border: OutlineInputBorder()),
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [CurrencyInputFormatter()],
                       validator: (v) => v!.isEmpty ? 'Required' : null,
                     ),
                   ),
@@ -187,10 +200,18 @@ class _AddEditProductScreenState extends ConsumerState<AddEditProductScreen> {
                 ],
               ),
               const SizedBox(height: 16),
-              TextFormField(
-                controller: _categoryController,
+              DropdownButtonFormField<String>(
+                value: _categoryController.text,
                 decoration: const InputDecoration(labelText: 'Category', border: OutlineInputBorder()),
-                validator: (v) => v!.isEmpty ? 'Required' : null,
+                items: ['Running', 'Basketball', 'Football', 'Gym & Training', 'Trail Running']
+                    .map((cat) => DropdownMenuItem(value: cat, child: Text(cat)))
+                    .toList(),
+                onChanged: (val) {
+                  if (val != null) {
+                    _categoryController.text = val;
+                  }
+                },
+                validator: (v) => v == null || v.isEmpty ? 'Required' : null,
               ),
               const SizedBox(height: 24),
               const Text('Images', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
@@ -202,7 +223,8 @@ class _AddEditProductScreenState extends ConsumerState<AddEditProductScreen> {
                   Expanded(
                     child: TextFormField(
                       controller: _imageUrlController,
-                      decoration: const InputDecoration(labelText: 'Add Image URL', border: OutlineInputBorder()),
+                      decoration: const InputDecoration(labelText: 'Add Image URL (press enter)', border: OutlineInputBorder()),
+                      onFieldSubmitted: (_) => _addManualImageUrl(),
                     ),
                   ),
                   IconButton(
@@ -269,6 +291,23 @@ class _AddEditProductScreenState extends ConsumerState<AddEditProductScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class CurrencyInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.text.isEmpty) {
+      return newValue;
+    }
+    final numericString = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+    if (numericString.isEmpty) return const TextEditingValue();
+    final number = int.parse(numericString);
+    final formatted = NumberFormat.currency(locale: 'id_ID', symbol: '', decimalDigits: 0).format(number);
+    return TextEditingValue(
+      text: formatted,
+      selection: TextSelection.collapsed(offset: formatted.length),
     );
   }
 }
